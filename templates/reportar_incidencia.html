@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de incidencias municipal</title>
+</head>
+<body>
+    <main>
+        <h1>Reporte de incidencias municipal</h1>
+        <p>Ingrese el DNI del ciudadano para cargar sus datos automáticamente</p>
+        <p>Una vez completado, ingerese los detalles de incidencia.</p>
+        <section>
+            <h2>Datos del ciudadano</h2>
+            <form id="ciudadano-form" autocomplete="off">
+                <div>
+                    <label for="dni">DNI</label>
+                    <input id="dni" name="dni" type="text" inputmode="numeric" maxlength="8" required />
+                </div>
+                <div>
+                    <button id="buscar-ciudadano" type="button">Buscar ciudadano</button>
+                </div>
+                <div>
+                    <label for="nombre">Nombre completo</label>
+                    <input id="nombre" name="nombre" type="text" disabled />
+                </div>
+                <div>
+                    <label for="correo">Correo</label>
+                    <input id="correo" name="correo" type="email" disabled />
+                </div>
+                <div>
+                    <label for="telefono">Telefono</label>
+                    <input id="telefono" name="telefono" type="text" disabled />
+                </div>
+                <p id="ciudadano-mensaje" role="status"></p>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        const dniInput = document.getElementById('dni');
+        const nombreInput = document.getElementById('nombre');
+        const correoInput = document.getElementById('correo');
+        const telefonoInput = document.getElementById('telefono');
+        const mensaje = document.getElementById('ciudadano-mensaje');
+        const buscarButton = document.getElementById('buscar-ciudadano');
+
+        const setFields = (data) => {
+            nombreInput.value = data?.nombre || '';
+            correoInput.value = data?.email || '';
+            telefonoInput.value = data?.telefono || '';
+        };
+
+        const clearFields = () => {
+            nombreInput.value = '';
+            correoInput.value = '';
+            telefonoInput.value = '';
+        };
+
+        const buscarCiudadano = async (dni) => {
+            mensaje.textContent = '';
+            clearFields();
+
+            if (!dni) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/ciudadanos/${encodeURIComponent(dni)}/`);
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        mensaje.textContent = 'Ciudadano no existe';
+                        return;
+                    }
+                    mensaje.textContent = 'Error al consultar ciudadano';
+                    return;
+                }
+
+                const data = await response.json();
+                setFields(data);
+            } catch (error) {
+                mensaje.textContent = 'Error de red al consultar ciudadano';
+            }
+        };
+
+        dniInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                buscarCiudadano(dniInput.value.trim());
+            }
+        });
+
+        buscarButton.addEventListener('click', () => {
+            buscarCiudadano(dniInput.value.trim());
+        });
+    </script>
+</body>
+</html>
