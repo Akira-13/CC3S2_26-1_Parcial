@@ -56,6 +56,25 @@
                 </div>
             </form>
         </section>
+
+        <section id="listado-incidencias">
+            <h2>Listado de incidencias</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha de reporte</th>
+                        <th>Titulo</th>
+                        <th>Estado</th>
+                        <th>Evidencia</th>
+                    </tr>
+                </thead>
+                <tbody id="incidencias-body">
+                    <tr>
+                        <td colspan="4">Cargando incidencias...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
     </main>
 
     <script>
@@ -68,6 +87,7 @@
         const incidenciaSection = document.getElementById('incidencia-section');
         const incidenciaForm = document.getElementById('incidencia-form');
         const evidenciaInput = document.getElementById('evidencia');
+        const incidenciasBody = document.getElementById('incidencias-body');
 
         const MAX_EVIDENCIA_BYTES = 5 * 1024 * 1024;
 
@@ -142,6 +162,56 @@
             return { ok: true };
         };
 
+        const formatearFecha = (isoString) => {
+            if (!isoString) {
+                return '';
+            }
+            const fecha = new Date(isoString);
+            if (Number.isNaN(fecha.getTime())) {
+                return isoString;
+            }
+            return fecha.toLocaleString();
+        };
+
+        const renderIncidencias = (incidencias) => {
+            incidenciasBody.innerHTML = '';
+
+            if (!incidencias.length) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="4">No hay incidencias registradas.</td>';
+                incidenciasBody.appendChild(row);
+                return;
+            }
+
+            incidencias.forEach((incidencia) => {
+                const row = document.createElement('tr');
+                const evidenciaLink = incidencia.evidencia
+                    ? `<a href="${incidencia.evidencia}" target="_blank" rel="noopener">Descargar</a>`
+                    : 'Sin evidencia';
+
+                row.innerHTML = `
+                    <td>${formatearFecha(incidencia.fecha_creacion)}</td>
+                    <td>${incidencia.titulo || ''}</td>
+                    <td>${incidencia.estado || ''}</td>
+                    <td>${evidenciaLink}</td>
+                `;
+                incidenciasBody.appendChild(row);
+            });
+        };
+
+        const cargarIncidencias = async () => {
+            try {
+                const response = await fetch('/api/incidencias/');
+                if (!response.ok) {
+                    throw new Error('Error al cargar incidencias');
+                }
+                const data = await response.json();
+                renderIncidencias(Array.isArray(data) ? data : data.results || []);
+            } catch (error) {
+                incidenciasBody.innerHTML = '<tr><td colspan="4">No se pudo cargar el listado.</td></tr>';
+            }
+        };
+
         incidenciaForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
@@ -169,10 +239,13 @@
                 mensaje.textContent = 'Incidencia registrada correctamente.';
                 incidenciaForm.reset();
                 evidenciaInput.value = '';
+                cargarIncidencias();
             } catch (error) {
                 mensaje.textContent = 'Error de red al registrar la incidencia.';
             }
         });
+
+        cargarIncidencias();
     </script>
 </body>
 </html>
