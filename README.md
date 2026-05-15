@@ -14,12 +14,12 @@ Se usa Django para definir los modelos de datos y la API con Django REST Framewo
 
 Se usa directamente JavaScript, HTML y CSS básico para enviar y solicitar datos al backend.
 
+## Instalación y configuración
+
 ## Requisitos previos
 
 - Python 3.8 o superior
 - pip (gestor de paquetes de Python)
-
-## Instalación y configuración
 
 ### 1. Instalar dependencias
 
@@ -28,9 +28,6 @@ Recomendable iniciar un entorno virtual.
 ```bash
 python -m venv .venv
 source .venv/bin/activate(.zh)(.fish)(.sh)
-```
-
-```bash
 pip install -r requirements.txt
 ```
 
@@ -61,6 +58,7 @@ El servidor estará disponible en: `http://localhost:8000/`
 - **Sitio principal:** http://localhost:8000/
 - **Panel de administración:** http://localhost:8000/admin/
 - **API:** http://localhost:8000/api/
+- **Swagger:** http://localhost:8000/api/docs
 
 ## Interacción
 
@@ -70,6 +68,6 @@ El servidor estará disponible en: `http://localhost:8000/`
 
 - `registro_incidencias/` - Aplicación principal del sistema
 - `sistema_incidencias/` - Configuración del proyecto Django
-- `documentación/` - Documentos de análisis y especificación
-- `evidencias_ejecución/` - Evidencias de ejecución del proyecto
+- `documentación/` - Documentos de requisitos, historias de usuario, arquitectura.
+- `documentación/casos_prueba/` - Evidencias de ejecución del proyecto y casos de prueba para cumplir con requisitos e historias de usuario.
 - `db.sqlite3` - Base de datos SQLite

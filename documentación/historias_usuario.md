@@ -4,4 +4,4 @@
 
 - Como usuario, quiero adjuntar una imagen de la incidencia como evidencia para apoyar la información especificada en el texto de mi incidencia.
 
-- Como usuario, quiero ver las quejas que he subido junto a su estado (pendiente, en revisión, resuelto) para realizar un seguimiento de mis incidencias reportadas.
+- Como usuario, quiero ver las quejas que se han subido junto a su estado (pendiente, en revisión, resuelto) para realizar un seguimiento de mis incidencias reportadas.
