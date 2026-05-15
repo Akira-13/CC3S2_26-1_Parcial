@@ -12,3 +12,6 @@ class CiudadanoViewSet(viewsets.ModelViewSet):
 class IncidenciaViewSet(viewsets.ModelViewSet):
     queryset = Incidencia.objects.all()
     serializer_class = IncidenciaSerializer
+
+def ReportarIncidenciaView(request):
+    return render(request, 'reportar_incidencia.html')
