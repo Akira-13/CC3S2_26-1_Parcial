@@ -60,6 +60,10 @@ El servidor estará disponible en: `http://localhost:8000/`
 - **Panel de administración:** http://localhost:8000/admin/
 - **API:** http://localhost:8000/api/
 
+## Interacción
+
+- En la base de datos se incluye un usuario con DNI 77799888 que puede usarse para publicar una incidencia.
+
 ## Estructura del proyecto
 
 - `registro_incidencias/` - Aplicación principal del sistema

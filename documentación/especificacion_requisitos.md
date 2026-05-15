@@ -6,7 +6,7 @@
 
 - El usuario debe poder subir una imagen en formato JPG o PNG de como máximo 5MB junto a las preocupaciones que tenga.
 
-- El usuario debe poder ver todas las incidencias que ha reportado en un listado, junto a la evidencia adjuntada.
+- El usuario debe poder ver todas las incidencias que se han reportado en un listado, junto a la evidencia adjuntada.
 
 - El usuario debe poder usar su DNI para escribir automáticamente sus datos de nombre, residencia y correo de contacto.
 
