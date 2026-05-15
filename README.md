@@ -1,6 +1,16 @@
 # Sistema de Registro de Incidencias
 
-Proyecto Django para la gestión y registro de incidencias.
+## Arquitectura
+
+Se usa la arquitectura Modelo-Vista-Plantilla
+
+### Backend
+
+Se usa Django para definir los modelos de datos y la API con Django REST Framework.
+
+### Frontend
+
+Se usa directamente JavaScript, HTML y CSS básico para enviar y solicitar datos al backend.
 
 ## Requisitos previos
 
@@ -48,9 +58,5 @@ El servidor estará disponible en: `http://localhost:8000/`
 - `registro_incidencias/` - Aplicación principal del sistema
 - `sistema_incidencias/` - Configuración del proyecto Django
 - `documentación/` - Documentos de análisis y especificación
+- `evidencias_ejecución/` - Evidencias de ejecución del proyecto
 - `db.sqlite3` - Base de datos SQLite
-
-## Notas
-
-- El proyecto utiliza SQLite como base de datos por defecto
-- La base de datos inicial (`db.sqlite3`) ya viene creada en el repositorio

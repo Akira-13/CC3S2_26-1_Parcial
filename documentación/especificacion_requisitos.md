@@ -1,10 +1,3 @@
-Implemente los requisitos del software, la arquitectura, de 3 casos de uso o historias de usuario necesarios para un proyeccto que implemente un registro de incidencias (baches, alumbrado, basura, seguridad ciudadana o emergencia) en la vía pública.
-Puede utilizar el modelo gitflow para implemetar el backend y el front end. Define un escenario. Implementar Base de datos y el uso de API.
-
-Puede usar el flujo de trabajo (Workflow) considerado estádnar en la industria para garantizar la trazabilidad entre el negocio y el código. Resalte los patrones de diseño vistos en clase en su implementación y puede usar también el framwe Fastify.
-Considerar un API con envío de imágenes, video o audio
-Enviar link de su github con código, documentos de requisitos, especificación de casos de uso o de historas y casos de pureba realizadas.
-
 # Especificación de requisitos
 
 ## Requerimientos funcionales
