@@ -35,6 +35,27 @@
                 <p id="ciudadano-mensaje" role="status"></p>
             </form>
         </section>
+
+        <section id="incidencia-section" hidden>
+            <h2>Reporte de incidencia</h2>
+            <form id="incidencia-form" autocomplete="off">
+                <div>
+                    <label for="titulo">Titulo</label>
+                    <input id="titulo" name="titulo" type="text" required />
+                </div>
+                <div>
+                    <label for="descripcion">Descripcion</label>
+                    <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+                </div>
+                <div>
+                    <label for="evidencia">Evidencia (opcional)</label>
+                    <input id="evidencia" name="evidencia" type="file" accept="image/*" />
+                </div>
+                <div>
+                    <button type="submit">Publicar incidencia</button>
+                </div>
+            </form>
+        </section>
     </main>
 
     <script>
@@ -44,6 +65,11 @@
         const telefonoInput = document.getElementById('telefono');
         const mensaje = document.getElementById('ciudadano-mensaje');
         const buscarButton = document.getElementById('buscar-ciudadano');
+        const incidenciaSection = document.getElementById('incidencia-section');
+        const incidenciaForm = document.getElementById('incidencia-form');
+        const evidenciaInput = document.getElementById('evidencia');
+
+        const MAX_EVIDENCIA_BYTES = 5 * 1024 * 1024;
 
         const setFields = (data) => {
             nombreInput.value = data?.nombre || '';
@@ -57,9 +83,14 @@
             telefonoInput.value = '';
         };
 
+        const setIncidenciaVisible = (isVisible) => {
+            incidenciaSection.hidden = !isVisible;
+        };
+
         const buscarCiudadano = async (dni) => {
             mensaje.textContent = '';
             clearFields();
+            setIncidenciaVisible(false);
 
             if (!dni) {
                 return;
@@ -78,6 +109,7 @@
 
                 const data = await response.json();
                 setFields(data);
+                setIncidenciaVisible(true);
             } catch (error) {
                 mensaje.textContent = 'Error de red al consultar ciudadano';
             }
@@ -92,6 +124,54 @@
 
         buscarButton.addEventListener('click', () => {
             buscarCiudadano(dniInput.value.trim());
+        });
+
+        const validarEvidencia = (file) => {
+            if (!file) {
+                return { ok: true };
+            }
+
+            if (!file.type.startsWith('image/')) {
+                return { ok: false, message: 'La evidencia debe ser una imagen.' };
+            }
+
+            if (file.size > MAX_EVIDENCIA_BYTES) {
+                return { ok: false, message: 'La evidencia no debe superar 5 MB.' };
+            }
+
+            return { ok: true };
+        };
+
+        incidenciaForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const evidenciaFile = evidenciaInput.files[0];
+            const validacion = validarEvidencia(evidenciaFile);
+            if (!validacion.ok) {
+                mensaje.textContent = validacion.message;
+                return;
+            }
+
+            const formData = new FormData(incidenciaForm);
+            formData.append('ciudadano', dniInput.value.trim());
+
+            try {
+                const response = await fetch('/api/incidencias/', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    mensaje.textContent = 'No se pudo registrar la incidencia.';
+                    return;
+                }
+
+                mensaje.textContent = 'Incidencia registrada correctamente.';
+                incidenciaForm.reset();
+                evidenciaInput.value = '';
+            } catch (error) {
+                mensaje.textContent = 'Error de red al registrar la incidencia.';
+            }
         });
     </script>
 </body>
