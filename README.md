@@ -1,5 +1,7 @@
 # Sistema de Registro de Incidencias
 
+![Página principal de reporte de incidencias](evidencias_ejecución/reporte_incidencias_main.png)
+
 ## Arquitectura
 
 Se usa la arquitectura Modelo-Vista-Plantilla
