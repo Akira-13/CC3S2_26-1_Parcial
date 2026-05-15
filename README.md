@@ -21,6 +21,13 @@ Se usa directamente JavaScript, HTML y CSS básico para enviar y solicitar datos
 
 ### 1. Instalar dependencias
 
+Recomendable iniciar un entorno virtual.
+
+```bash
+python -m venv .venv
+source .venv/bin/activate(.zh)(.fish)(.sh)
+```
+
 ```bash
 pip install -r requirements.txt
 ```
