@@ -1,6 +1,6 @@
 # Sistema de Registro de Incidencias
 
-![Página principal de reporte de incidencias](evidencias_ejecución/reporte_incidencias_main.png)
+![alt text](documentación/casos_prueba/reporte_incidencias_main.png)
 
 ## Arquitectura
 
